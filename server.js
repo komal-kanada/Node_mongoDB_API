@@ -1,24 +1,18 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const server = '127.0.0.1:27017'; 
-const database = 'TestDB'; 
-const routes = require('./routes/index');
+import express from 'express';
+import { urlencoded, json } from 'body-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import routes from './src/routes/index';
+import database from './src/config/database';
+
 const app = express();
-const { User } = require('./model/user');
+app.use(cors());
+dotenv.config();
 
-mongoose.connect(`mongodb://${server}/${database}`, { useUnifiedTopology: true,
-useNewUrlParser: true, })
-        .then(()=>console.log('DB Connected'))
-        .catch(error => console.log(error));
-// mongoose.set('useCreateIndex', true);
-//parse application/x-www-form-urlencoded
-
-
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(urlencoded({ extended: false }))
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(json())
 app.use('/api',routes);
 
 const port = process.env.PORT || 4000 ;
