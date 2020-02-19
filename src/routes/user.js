@@ -1,10 +1,35 @@
 import express from 'express';
 import multer from 'multer';
-const upload = multer({dest: __dirname + '/uploads/images'});
 import {login, search, find, data } from '../controller/user.controller'
-
+const upload = multer({dest: __dirname + '/uploads/images'});
 
 const router = express.Router();
+
+// Using Ajax File Upload 
+// const storage = multer.diskStorage({
+//     destination : function(req, file, callback){
+//         callback(null, '/uploadsajax')
+//     },
+//     filename: function(req, file, callback){
+//         callback(null, file.fieldname + '-' + Date.now())
+//     }
+// });
+
+// const uploadA = multer({ storage: storage}).single('userPhoto');
+
+// router.get('/', function(req,res){
+//     res.sendFile(__dirname + 'index.html');
+// })
+
+router.post('/api/photo', function(req,res){
+    uploadA(req,res,function(err){
+        if(err){
+            return res.end('Erro Upload File');
+        }
+        res.end('File is Uploaded');
+    })
+})
+
 
 router.post(
     '/signin',
@@ -13,6 +38,11 @@ router.post(
 router.post(
     '/signup',
     search
+);
+
+router.get(
+    '/list',
+    find
 );
 
 router.post('/upload', upload.single('photo'), (req, res) => {
@@ -40,10 +70,5 @@ router.post('/uploadmultiple', upload.array('photo',12), async (req,res) => {
         })
     }
 })
-
-router.get(
-    '/list',
-    find
-);
 
 module.exports = router;
