@@ -29,6 +29,18 @@ router.post('/upload', upload.single('photo'), (req, res) => {
     }
 });
 
+router.post('/uploadmultiple', upload.array('photo',12), async (req,res) => {
+    try{
+        if(req.files && req.files.length) {
+            res.send(req.files)
+        }
+    }catch(error){
+        res.status(500).send({
+            message: error.message
+        })
+    }
+})
+
 router.get(
     '/list',
     find

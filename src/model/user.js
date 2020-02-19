@@ -5,14 +5,12 @@ let salt = 10;
 const userSchema = Schema({
     email:{
         type: String,
-        // required: true,
-        // unique: 1,
-        // trim: true
+        required: true,
     },
     password:{
         type: String,
-        // required: true,
-        // minlength: 6
+        required: true,
+        minlength: 6
     }
 });
 
@@ -42,4 +40,4 @@ userSchema.methods.comparePassword = function(candididatePassword, checkPassword
 
 
 const User = model('User',userSchema);
-export default { User }
+module.exports =  User; 

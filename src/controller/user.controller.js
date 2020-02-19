@@ -1,4 +1,5 @@
-import { User } from '../model/user';
+import User from '../model/user';
+
 export const login = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -24,22 +25,6 @@ export const login = async (req, res) => {
     }
 }
 
-// export const data = async (req,res) =>{
-//     try{
-//         upload.single('photo'),(req,res) =>{
-//             if(req.file) {
-//                 res.json(req.file);
-//             }
-//             else throw 'error';
-//         }
-//     }
-//     catch(error){
-//         res.status(500).send({
-//             message: error.message
-//         })
-//     }
-// }
-
 export const search = async (req, res) => {
     try{
         const user = new User(
@@ -58,6 +43,7 @@ export const search = async (req, res) => {
 
 export const find = async (req,res) => {
     try{
+        console.log(User);
         User.find({}, function(err, data){
         if(err) res.send(err);
         res.send(data);
